@@ -11,9 +11,10 @@ export const RegistroProd = () => {
     precio: "",
     oferta: null,
     cantidad: "",
-    imagen: null,
+    imagen: "",
     tipoProducto: "",
   });
+  const [image, setImagen] = useState("");
 
   const handleInput = (event) => {
     setProducto({ ...producto, [event.target.name]: event.target.value });
@@ -21,12 +22,25 @@ export const RegistroProd = () => {
 
   const isDisabled = true;
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedFile(file);
+  // };
+
+  function handleImage(e) {
+    console.log(e.target.files);
+    setImagen(e.target.files[0]);
+  }
+
+  function handleApi() {
+    const producto = new producto();
+    producto.append("image", image);
+    axios.post("url", producto).then((res) => {
+      console.log(res);
+    });
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -139,7 +153,7 @@ export const RegistroProd = () => {
                 type="file"
                 id="imagen"
                 name="imagen"
-                onChange={handleFileChange}
+                onChange={handleImage}
                 placeholder="Link de la imagen imagen"
                 className="bg-[#DCDCDC] p-2 focus:outline-none mb-4"
               />

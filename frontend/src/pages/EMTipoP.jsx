@@ -1,4 +1,3 @@
-// EMUsuarios.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -35,41 +34,45 @@ const EMTipoP = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="mt-4 ml-4">
         <Link to="/registro2">
-          <button className="bg-clr-three text-white p-1 rounded-md mr-2 ">
+          <button className="bg-clr-three text-white p-1 rounded-md mr-2 mb-6 ">
             Agregar +
           </button>
         </Link>
 
-        <table className="border-collapse border border-clr-two mt-4 mb-6 ">
-          <thead>
-            <tr>
-              <th className="text-start mb-4">Tipo de Producto</th>
-              <th className="text-start">Descripcion</th>
-              <th className="text-start">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tipoProducto.map((tipoProducto) => (
-              <tr key={tipoProducto.id}>
-                <td>{tipoProducto.tipoProducto}</td>
-                <td>{tipoProducto.descripcion}</td>
-                <td>
-                  <button
-                    onClick={() => handleEliminarTipoProducto(tipoProducto.id)}
-                    className="bg-clr-three text-white p-1 rounded-md mr-2 mb-4"
-                  >
-                    Eliminar
-                  </button>
-                  <Link to={`/modificar1/${tipoProducto.id}`}>
-                    <button className="bg-clr-three text-white p-1 rounded-md mr-2">
-                      Modificar
-                    </button>
-                  </Link>
-                </td>
+        <div className="bg-gray-300 rounded-xl py-6">
+          <table className="ml-4 mr-4">
+            <thead className="bg-clr-one text-white">
+              <tr>
+                <th className="text-start rounded">Tipo de Producto</th>
+                <th className="text-start rounded">Descripcion</th>
+                <th className="text-start rounded">Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {tipoProducto.map((tipoProducto) => (
+                <tr key={tipoProducto.id}>
+                  <td>{tipoProducto.tipoProducto}</td>
+                  <td>{tipoProducto.descripcion}</td>
+                  <td className="flex items-center py-2">
+                    <button
+                      onClick={() =>
+                        handleEliminarTipoProducto(tipoProducto.id)
+                      }
+                      className="bg-clr-three text-white p-1 rounded-md mr-2"
+                    >
+                      Eliminar
+                    </button>
+                    <Link to={`/modificar1/${tipoProducto.id}`}>
+                      <button className="bg-clr-three text-white p-1 rounded-md mr-2">
+                        Modificar
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-// EMUsuarios.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -40,36 +39,38 @@ const EMMPago = () => {
           </button>
         </Link>
 
-        <table className="border-collapse border border-clr-two mt-4 mb-6 ">
-          <thead>
-            <tr>
-              <th className="text-start mb-4">Nombre</th>
-              <th className="text-start">Descripcion</th>
-              <th className="text-start">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {metodoPago.map((metodoPago) => (
-              <tr key={metodoPago.id}>
-                <td>{metodoPago.nombre}</td>
-                <td>{metodoPago.descripcion}</td>
-                <td>
-                  <button
-                    onClick={() => handleEliminarMetodoPago(metodoPago.id)}
-                    className="bg-clr-three text-white p-1 rounded-md mr-2 mb-4"
-                  >
-                    Eliminar
-                  </button>
-                  <Link to={`/modificar3/${metodoPago.id}`}>
-                    <button className="bg-clr-three text-white p-1 rounded-md mr-2">
-                      Modificar
-                    </button>
-                  </Link>
-                </td>
+        <div className="bg-gray-300 rounded-xl py-6">
+          <table className="ml-4 mr-4">
+            <thead className="bg-clr-one text-white">
+              <tr>
+                <th className="text-start rounded">Nombre</th>
+                <th className="text-start rounded">Descripcion</th>
+                <th className="text-start rounded">Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {metodoPago.map((metodoPago) => (
+                <tr key={metodoPago.id}>
+                  <td>{metodoPago.nombre}</td>
+                  <td>{metodoPago.descripcion}</td>
+                  <td className="flex items-center py-2">
+                    <button
+                      onClick={() => handleEliminarMetodoPago(metodoPago.id)}
+                      className="bg-clr-three text-white p-1 rounded-md mr-2"
+                    >
+                      Eliminar
+                    </button>
+                    <Link to={`/modificar3/${metodoPago.id}`}>
+                      <button className="bg-clr-three text-white p-1 rounded-md mr-2">
+                        Modificar
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

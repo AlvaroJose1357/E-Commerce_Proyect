@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 const ModificarProd = () => {
   const [producto, setProducto] = useState({
-    detalles: "",
+    nombre: "",
     precio: "",
     oferta: null,
     cantidad: "",
@@ -16,6 +16,7 @@ const ModificarProd = () => {
     event.preventDefault();
 
     try {
+      console.log("Datos a enviar:", producto);
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/productos/${params.id}/`,
         producto
@@ -66,11 +67,11 @@ const ModificarProd = () => {
             <label>
               <input
                 type="text"
-                id="detalles"
-                name="detalles"
-                value={producto.detalles}
+                id="nombre"
+                name="nombre"
+                value={producto.nombre}
                 onChange={handleInput}
-                placeholder="Detalles del producto"
+                placeholder="Nombre del producto"
                 className="bg-[#DCDCDC] p-2 focus:outline-none mb-4"
               />
             </label>
