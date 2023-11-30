@@ -1,6 +1,8 @@
 from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.authentication import TokenAuthentication
+from django.contrib.auth.hashers import make_password
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -151,9 +153,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UsuarioSerializer
 
     def create(self, request, *args, **kwargs):
+        password = request.data.get("password")
+        hashed_password = make_password(password)
+        request.data["password"] = hashed_password
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        print(request.data)
         self.perform_create(serializer)
         user = serializer.instance
 
@@ -169,14 +174,17 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 
 
 class LoginView(APIView):
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
-
+        print(password, email)
         user = authenticate(request, email=email, password=password)
+        print(user)
 
         if user:
-            token, created = Token.objects.get_or_create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_200_OK)
         else:
             return Response(
