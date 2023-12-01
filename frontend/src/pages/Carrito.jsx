@@ -102,6 +102,13 @@ export default function Carrito() {
               >
                 Continuar compra
               </Link>
+              <Link
+                to={paymentLink}
+                target="_blank"
+                className="w-full text-white py-2 px-4 rounded-lg bg-clr-two hover:bg-gradient-to-br group from-clr-one via-clr-two to-clr-three font-semibold"
+              >
+                finalizar compra
+              </Link>
             </div>
           </section>
         </section>

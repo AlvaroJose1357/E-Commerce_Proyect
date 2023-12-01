@@ -78,7 +78,6 @@ export default function Header() {
               Metodo Pago
             </Link>
           </div>
-          <div></div>
         </button>
         <p className="border-l-2 border-black"></p>
         <Link to="favoritos">

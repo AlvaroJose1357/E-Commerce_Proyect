@@ -56,11 +56,11 @@ const router = createBrowserRouter([
       },
       {
         path: "favoritos/",
-        element: <Favoritos />,
+        element: <Favoritos />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "carrito/",
-        element: <Carrito />,
+        element: <Carrito />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "user/",
