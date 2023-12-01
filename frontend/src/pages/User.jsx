@@ -146,7 +146,9 @@ function App() {
           <componentes.Overlay signinIn={signIn}>
             <componentes.LeftOverlayPanel signinIn={signIn}>
               <componentes.Title>Bienvenido</componentes.Title>
-              <componentes.Paragraph>Hola xd</componentes.Paragraph>
+              <componentes.Paragraph>
+                Inicia sesion para ver que hay de nuevo.
+              </componentes.Paragraph>
               <componentes.GhostButton onClick={() => toggle(true)}>
                 Iniciar Sesion
               </componentes.GhostButton>
@@ -155,7 +157,8 @@ function App() {
             <componentes.RightOverlayPanel signinIn={signIn}>
               <componentes.Title>¡Hola, Gamer!</componentes.Title>
               <componentes.Paragraph>
-                Estas comprando cosas sol@? Hay comprador@s madur@s a 5km de tí
+                Registrate para hacer parte de nosotros y estar al tanto de las
+                novedades.
               </componentes.Paragraph>
               <componentes.GhostButton onClick={() => toggle(false)}>
                 Registrarte
@@ -177,8 +180,6 @@ function FormInicioSesion() {
     handleSubmit,
     formState: { errors },
     reset,
-    resetField,
-    setFocus,
   } = useForm();
 
   const onSubmitUser = handleSubmit(async (data) => {
