@@ -183,6 +183,7 @@ function FormInicioSesion() {
 
   const onSubmitUser = handleSubmit(async (data) => {
     try {
+      console.log(data);
       const res = await autenticarUsuario(data);
       if (res.data) {
         localStorage.setItem("tokenUser", res.data.token);

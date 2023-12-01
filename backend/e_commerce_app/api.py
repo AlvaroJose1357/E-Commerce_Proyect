@@ -1,6 +1,8 @@
 from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.authentication import TokenAuthentication
+from django.contrib.auth.hashers import make_password
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -83,20 +85,6 @@ class CarritoViewSet(viewsets.ModelViewSet):
             return Response({"error": "No autorizado"}, status=400)
 
 
-# class ProductosEnCarritoAPIView(APIView):
-#     queryset = models.TipoProducto.objects.all()
-#     permission_classes = [permissions.AllowAny]
-#     serializer_class = serializers.TipoProductoSerializer
-
-#     def get_queryset(self):
-#         queryset = queryset.filter(usuario=userId)
-#         key = self.request.headers.get("Authorization")
-#         userId = Token.objects.get(key=key).user_id
-#         productos = self.request.query_params.get("productos")
-
-#         return queryset
-
-
 class ProductoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = serializers.ProductoSerializer
@@ -150,10 +138,23 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = serializers.UsuarioSerializer
 
+    def get_queryset(self):
+        queryset = models.User.objects.all()
+        favoritos = self.request.query_params.get("favoritos")
+
+        if favoritos is not None:
+            key = self.request.headers.get("Authorization")
+            userId = Token.objects.get(key=key).user_id
+            queryset = queryset.filter(pk=userId)
+        return queryset
+
     def create(self, request, *args, **kwargs):
+        password = request.data.get("password")
+        hashed_password = make_password(password)
+        request.data["password"] = hashed_password
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        print(request.data)
         self.perform_create(serializer)
         user = serializer.instance
 
@@ -167,16 +168,56 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             headers=headers,
         )
 
+    @action(detail=False, methods=["post"])
+    def agregar_producto(self, request, pk=None):
+        key = self.request.headers.get("Authorization")
+        producto_id = request.query_params.get("producto_id")
+        try:
+            producto = models.Producto.objects.get(pk=producto_id)
+        except models.Producto.DoesNotExist:
+            return Response({"error": "El producto no existe."}, status=400)
+
+        if key:
+            userID = Token.objects.get(key=key).user_id
+            usuario = models.User.objects.get(pk=userID)
+            usuario.favoritos.add(producto)
+            return Response(
+                {"message": "Producto agregado al usuario correctamente."},
+                status=201,
+            )
+        else:
+            return Response({"error": "No autorizado"}, status=400)
+
+    @action(detail=True, methods=["delete"])
+    def eliminar_producto(self, request, pk=None):
+        usuario = self.get_object()
+        producto_id = request.query_params.get("producto_id")
+
+        if producto_id:
+            try:
+                usuario.favoritos.remove(producto_id)
+                return Response(
+                    {"message": "Producto eliminado del usuario correctamente."},
+                    status=204,
+                )
+            except Exception as e:
+                return Response({"error": str(e)}, status=400)
+        else:
+            return Response({"error": "ID del producto no proporcionado."}, status=400)
+
 
 class LoginView(APIView):
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
-
+        print(password, email)
         user = authenticate(request, email=email, password=password)
+        print(user)
 
         if user:
-            token, created = Token.objects.get_or_create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_200_OK)
         else:
             return Response(

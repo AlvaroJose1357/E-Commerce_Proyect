@@ -52,7 +52,7 @@ export default function CardProductoCarrito({ idProducto, carritoID }) {
         </div>
 
         <p className="self-center  text-lg font-bold">
-          {`$${producto.precio}`}
+          {`$${producto.oferta || producto.precio}`}
         </p>
         <div className="self-center flex justify-center items-center gap-x-2">
           <Button

@@ -4,6 +4,7 @@ import { obtenerProductosTipo } from "../api/productos.api";
 import { obtenerTipoProducto } from "../api/tipos_producto.api";
 import { agregarProductoCarrito } from "../api/carrito.api";
 import { useNavigate } from "react-router-dom";
+import { agregarFavoritosUsuario } from "../api/usuarios";
 
 function Button({ signo, handleClick }) {
   return (
@@ -35,7 +36,7 @@ export default function InfoProduct({ producto }) {
     cargarProductosRelacionados();
   }, []);
 
-  const handleClickAgregar = async () => {
+  const handleClickAgregarCarrito = async () => {
     let token = localStorage.getItem("tokenUser");
     if (token) {
       try {
@@ -43,6 +44,23 @@ export default function InfoProduct({ producto }) {
         if (response.data) {
           alert("Producto agregado correctamente");
           navigate("/carrito");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      navigate("/user");
+    }
+  };
+
+  const handleClickAgregarFavorito = async () => {
+    let token = localStorage.getItem("tokenUser");
+    if (token) {
+      try {
+        const response = await agregarFavoritosUsuario(token, producto.id);
+        if (response.data) {
+          alert("Agregado a lista de favoritos correctamente");
+          navigate("/favoritos");
         }
       } catch (error) {
         console.log(error);
@@ -72,28 +90,12 @@ export default function InfoProduct({ producto }) {
               <p className="text-center md:text-right ">
                 &ldquo;{producto.detalles}&rdquo;
               </p>
-              <div className="self-start flex justify-center gap-x-6">
-                <p>{producto.cantidad} disponibles</p>
-                <Button
-                  signo="-"
-                  handleClick={() => {
-                    if (cantidad > 0) {
-                      setCantidad(cantidad - 1);
-                    }
-                  }}
-                />
-                <p>{cantidad}</p>
-                <Button
-                  signo="+"
-                  handleClick={() => {
-                    if (cantidad < producto.cantidad) {
-                      setCantidad(cantidad + 1);
-                    }
-                  }}
-                />
-              </div>
+              <p className="font-semibold">{producto.cantidad} disponibles</p>
               <div className="flex justify-end gap-x-5">
-                <button className="bg-clr-three self-center md:self-end  w-fit px-6 py-1 rounded-lg ">
+                <button
+                  className="bg-clr-three self-center md:self-end  w-fit px-6 py-1 rounded-lg hover:bg-[#F056D0] "
+                  onClick={handleClickAgregarFavorito}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -111,7 +113,7 @@ export default function InfoProduct({ producto }) {
                 </button>
                 <button
                   className="bg-clr-three self-center md:self-end  w-fit px-6 py-1 rounded-lg hover:bg-[#F056D0]"
-                  onClick={handleClickAgregar}
+                  onClick={handleClickAgregarCarrito}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
