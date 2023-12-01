@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ModificarProd = () => {
   const [producto, setProducto] = useState({
@@ -10,6 +10,7 @@ const ModificarProd = () => {
     cantidad: "",
   });
 
+  const navigate = useNavigate();
   const params = useParams();
 
   const handleModificarProducto = async (event) => {
@@ -21,6 +22,7 @@ const ModificarProd = () => {
         `http://127.0.0.1:8000/api/productos/${params.id}/`,
         producto
       );
+      navigate("/registro7");
       console.log("Producto modificado:", response.data);
     } catch (error) {
       console.error("Error al modificar el producto:", error.response.data);
@@ -40,7 +42,8 @@ const ModificarProd = () => {
         const response = await axios.get(
           `http://127.0.0.1:8000/api/productos/${params.id}/`
         );
-
+        delete response.data.imagen;
+        console.log(response.data);
         setProducto(response.data);
       } catch (error) {
         console.error("Error al obtener el producto:", error);
@@ -59,6 +62,7 @@ const ModificarProd = () => {
           <form
             onSubmit={handleModificarProducto}
             className="flex flex-col w-full md:w-[30vw] h-full md:h-[70vh] bg-white items-center"
+            encType="multipart/form-data"
           >
             <h1 className="text-clr-two font-bold text-3xl text-center pt-14">
               ¡Modifica el producto registrado previamente!

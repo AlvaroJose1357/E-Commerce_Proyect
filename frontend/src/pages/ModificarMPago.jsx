@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ModificarMPago = () => {
   const [metodoPago, setMetodoPago] = useState({
@@ -8,6 +8,7 @@ const ModificarMPago = () => {
     descripcion: "",
   });
 
+  const navigate = useNavigate();
   const params = useParams();
 
   const handleModificarMPago = async (event) => {
@@ -18,6 +19,7 @@ const ModificarMPago = () => {
         `http://127.0.0.1:8000/api/metodo-pago/${params.id}/`,
         metodoPago
       );
+      navigate("/registro8");
       console.log("Método de pago modificado:", response.data);
     } catch (error) {
       console.error(

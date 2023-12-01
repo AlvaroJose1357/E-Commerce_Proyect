@@ -16,3 +16,18 @@ export const cerrarUsuario = (token) =>
   usuariosApi.post("/cerrar-sesion/", null, {
     headers: { Authorization: `${token}` },
   });
+
+export const obtenerFavoritosUsuario = (token) =>
+  usuariosApi.get("/?favoritos=true", {
+    headers: { Authorization: `${token}` },
+  });
+
+export const borrarFavoritoUsuario = (usuarioID, productoID) =>
+  usuariosApi.delete(
+    `/${usuarioID}/eliminar_producto/?producto_id=${productoID}`
+  );
+
+export const agregarFavoritosUsuario = (token, productoID) =>
+  usuariosApi.post(`/agregar_producto/?producto_id=${productoID}`, null, {
+    headers: { Authorization: `${token}` },
+  });

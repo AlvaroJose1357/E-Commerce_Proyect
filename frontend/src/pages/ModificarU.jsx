@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ModificarU = () => {
   const [user, setUser] = useState({
@@ -11,6 +11,7 @@ const ModificarU = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
   const params = useParams();
 
   const handleModificarUsuario = async (event) => {
@@ -21,6 +22,7 @@ const ModificarU = () => {
         `http://127.0.0.1:8000/api/usuarios/${params.id}/`,
         user
       );
+      navigate("/registro5");
       console.log("Usuario modificado:", response.data);
     } catch (error) {
       console.error("Error al modificar usuario:", error.response.data);
