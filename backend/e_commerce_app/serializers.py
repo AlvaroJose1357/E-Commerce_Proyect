@@ -49,6 +49,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
             "direccion",
             "email",
             "password",
+            "favoritos",
         )
 
 

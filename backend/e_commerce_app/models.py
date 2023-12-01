@@ -10,18 +10,6 @@ class Rol(models.Model):
         return self.tipoDeUsuario
 
 
-class User(AbstractUser):
-    telefonoUser = models.CharField(max_length=100)
-    direccion = models.CharField(max_length=100, blank=True)
-    email = models.EmailField(max_length=151, unique=True)
-    rol = models.ForeignKey(Rol, on_delete=models.CASCADE, null=True)
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "password"]
-
-    def __str__(self):
-        return self.first_name + "" + self.last_name or ""
-
-
 class TipoProducto(models.Model):
     tipoProducto = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
@@ -33,7 +21,7 @@ class TipoProducto(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     marca = models.CharField(max_length=100)
-    detalles = models.CharField(max_length=200)
+    detalles = models.CharField(max_length=300)
     caracteristicas = models.TextField(max_length=500)
     precio = models.IntegerField()
     oferta = models.IntegerField(null=True)
@@ -51,6 +39,19 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+class User(AbstractUser):
+    telefonoUser = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(max_length=151, unique=True)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE, null=True)
+    favoritos = models.ManyToManyField(Producto, blank=True)
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username", "password"]
+
+    def __str__(self):
+        return self.first_name + "" + self.last_name or ""
 
 
 class MetodoPago(models.Model):

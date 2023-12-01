@@ -37,7 +37,7 @@ export default function Ofertas() {
             </h2>
           </div>
         ) : ofertas.length > 0 ? (
-          <div className="flex flex-wrap gap-x-5 gap-y-9 ">
+          <div className="flex flex-wrap gap-x-5 gap-y-9 justify-center">
             {ofertas.map((oferta) => (
               <Card key={oferta.id} item={oferta} />
             ))}
