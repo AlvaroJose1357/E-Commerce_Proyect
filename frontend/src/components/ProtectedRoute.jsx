@@ -1,7 +1,13 @@
-import React from 'react'
+import {Navigate} from "react-router-dom"
+import Outlet from "../layout/Outlet";
 
-export const ProtectedRoute = () => {
-    return (
-        <div>ProtectedRoute</div>
-    )
-}
+
+export const ProtectedRoute = ({children}) => {
+    const token = localStorage.getItem("tokenUser");
+
+    if (!token) {
+        return <Navigate to="/user  " replace />;
+      }
+    
+      return children ? children : <Outlet />;
+};

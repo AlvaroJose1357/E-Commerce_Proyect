@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { obtenerProductosCarrito } from "../api/carrito.api";
+import { obtenerProducto } from "../api/productos.api";
 import CardProductoCarrito from "../components/CardProductoCarrito";
 import axios from "axios";
 
@@ -8,62 +9,69 @@ import axios from "axios";
   /*Metodo de pago*/
 }
 export default function Carrito() {
-  const [carrito, setCarrito] = useState([]);
-  const [carritoID, setCarritoID] = useState();
+  const [carrito, setCarrito] = useState(null);
   const [paymentLink, setPaymentLink] = useState("");
+
+  const handleFinishPayment = async () => {
+    const response = await axios.post(
+      "http://127.0.0.1:8000/payment",
+      carrito.productos
+    );
+
+    window.location.href = response.data.init_point;
+  };
 
   useEffect(() => {
     async function cargarProductosCarrito() {
       try {
-        const response = await obtenerProductosCarrito(
+        const cartResponse = await obtenerProductosCarrito(
           localStorage.getItem("tokenUser")
-        );
-        if (response.data.length > 0) {
-          setCarrito(response.data[0].productos);
-          setCarritoID(response.data[0].id);
+        ).then((response) => response.data[0]);
+
+        if (cartResponse) {
+          cartResponse.productos.map(async (itemId) => {
+            const response = await obtenerProducto(itemId);
+
+            if (response.data) {
+              cartResponse.productos = cartResponse.productos.map((id) => {
+                if (id === itemId) {
+                  return {
+                    title: response.data.nombre,
+                    quantity: 1,
+                    currency_id: "COP",
+                    unit_price: response.data.precio,
+                  };
+                }
+                return id;
+              });
+            }
+          });
+
+          setCarrito(cartResponse);
         }
       } catch (error) {
         console.log(error);
       }
     }
+
     cargarProductosCarrito();
   }, []);
-
-  const handleRequest = async () => {
-    const response = await axios.post("http://127.0.0.1:8000/payment");
-    /*La función handleRequest realiza una solicitud HTTP POST a la URL utilizando la biblioteca Axios*/
-
-    console.log(response);
-
-    setPaymentLink(response.data.init_point);
-  };
-  /*aqui es para cuando  la solicitud HTTP se completa con éxito, la función handleRequest establece el valor de paymentLink con el valor de init_point obtenido en la respuesta del servidor */
-
-  useEffect(() => {
-    try {
-      handleRequest();
-    } catch (error) {
-      console.log(error);
-      /*pos por si sale algun error*/
-    }
-  }, []);
-  /*useEffect se utiliza para llamar a la función handleRequest Esto permite que el pago se realice automáticamente*/
 
   return (
     <div className="font-sans flex flex-col items-center gap-y-10 py-8 ">
       {/* Encabezado de articulos */}
-      {carrito.length > 0 ? (
+      {carrito?.productos?.length > 0 ? (
         <section className="w-[90vw] flex flex-col md:flex-row justify-center gap-x-8 items-center justify-self-center">
           {/* <div className="flex items-center justify-center p-5 md:w-1/2"> */}
           <section className="w-[85%] md:w-[62%]  flex flex-col gap-y-3">
             <h1 className="p-3 text-2xl font-bold text-[#6A61D9] mt-4  text-center md:text-start">
-              Carro {`(${carrito.length})`}
+              Carro {`(${carrito?.productos.length})`}
             </h1>
-            {carrito.map((idProducto) => (
+            {carrito?.productos.map((idProducto) => (
               <CardProductoCarrito
                 key={idProducto}
                 idProducto={idProducto}
-                carritoID={carritoID}
+                carritoID={carrito?.id}
               />
             ))}
           </section>
@@ -102,13 +110,12 @@ export default function Carrito() {
               >
                 Continuar compra
               </Link>
-              <Link
-                to={paymentLink}
-                target="_blank"
+              <button
+                onClick={handleFinishPayment}
                 className="w-full text-white py-2 px-4 rounded-lg bg-clr-two hover:bg-gradient-to-br group from-clr-one via-clr-two to-clr-three font-semibold"
               >
                 finalizar compra
-              </Link>
+              </button>
             </div>
           </section>
         </section>

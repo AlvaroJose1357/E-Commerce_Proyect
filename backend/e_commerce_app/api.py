@@ -264,42 +264,14 @@ class PaymentView(APIView):
             "TEST-416579947128865-112820-0118d8a35783cd83ababcb2e9ee7838c-1570676804"
         )
         
-        # se crea una lista vacia para almacenar los productos que se van a comprar
-        # items = []        
-        # # Obtener los productos enviados desde el front
-        # for x in request.data.get("productos", None ):
-        #     items.append(
-        #         {
-        #             "title": x.get("nombre"),
-        #             "unit_price": x.get("precio"),
-        #             "currency_id": "COP",
-        #             "quantity": x.get("cantidad", 1), 
-        #         }
-        #     )
-        # # se almacena la informacion de la compra
-        # preference_data = {"items": items}
-        #informacion sobre los productos
+        
         preference_data = {
-            "items": [
-                {
-                    "title": "Portátil HP 15-dw3505la",
-                    "unit_price": 5000,
-                    "currency_id": "COP",
-                    "quantity": 1,
-                },
-                {
-                    "title": "Portátil HP 15-dw3505la",
-                    "unit_price": 20000,
-                    "currency_id": "COP",
-                    "quantity": 1,
-                },
-                
-            ]
+            "items": request.data
         }
+        
         # se almacena la respuesta, se imprime y se devuelve al cliente con una respuesta HTTP_200_OK
         preference_response = sdk.preference().create(preference_data)
         preference = preference_response["response"]
-        print(preference)
         return Response(
             preference, status=status.HTTP_200_OK
         )  # HTTP_200_OK signifca que esta bieeen
