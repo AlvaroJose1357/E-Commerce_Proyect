@@ -57,11 +57,19 @@ const router = createBrowserRouter([
       },
       {
         path: "favoritos/",
-        element: <ProtectedRoute><Favoritos/></ProtectedRoute>, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <Favoritos />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "carrito/",
-        element: <ProtectedRoute><Carrito /></ProtectedRoute>, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <Carrito />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "user/",
@@ -69,51 +77,99 @@ const router = createBrowserRouter([
       },
       {
         path: "registro/",
-        element: <ProtectedRoute><RegistroU /></ProtectedRoute>, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <RegistroU />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "registro2/",
-        element: <RegistroTP />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <RegistroTP />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "registro3/",
-        element: <RegistroP />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <RegistroP />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "registro4/",
-        element: <RegistroMP />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <RegistroMP />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "registro5/",
-        element: <EMUsuarios />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <EMUsuarios />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "registro6/",
-        element: <EMTipoP />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <EMTipoP />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "registro7/",
-        element: <EMProd />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <EMProd />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "registro8/",
-        element: <EMMPago />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <EMMPago />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "/modificar/:id",
-        element: <ModificarU />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <ModificarU />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "/modificar1/:id",
-        element: <ModificarTP />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <ModificarTP />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "/modificar2/:id",
-        element: <ModificarProd />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <ModificarProd />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "/modificar3/:id",
-        element: <ModificarMPago />, // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
+        element: (
+          <ProtectedRoute>
+            <ModificarMPago />
+          </ProtectedRoute>
+        ), // esta ruta solo se puede acceder si el usuario esta logueado (protected route)
       },
       {
         path: "seccion-asus/",
