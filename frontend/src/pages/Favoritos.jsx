@@ -39,32 +39,27 @@ export default function Favoritos() {
       </div>
     </section>
   ) : (
-    <section className="py-16 px-8">
-      <div className="border max-w-xl mx-auto text-center p-4 flex flex-col rounded-md">
-        <p className="text-violet-700 text-2xl font-medium">
-          No tienes ningun articulo
-        </p>
+    <section className="py-16 px-8 min-h-[80vh] flex justify-center items-center">
+      <div className="  flex flex-col md:flex-row gap-x-6 w-[85%] md:w-[70%] lg:w-[60%] h-min items-center justify-center px-16 py-8 rounded-lg shadow-lg">
+        <FaRegHeart className="text-9xl text-violet-700 flex-shrink-0 hover:scale-110 transition duration-300 ease-out" />
+        <div className=" flex flex-col gap-y-[0.2rem] text-center">
+          <h3 className="bg-clip-text text-transparent bg-gradient-to-br group from-clr-one via-clr-two to-clr-three text-2xl md:text-3xl font-bold text-[#6A61D9] px-3 py-3">
+            No tienes ningun articulo
+          </h3>
 
-        <div className="h-8" />
-
-        <div className="flex gap-8">
-          <FaRegHeart className="text-7xl text-violet-700 flex-shrink-0" />
-
-          <p className="text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed natus
-            quam adipisci maiores dolorem culpa vero! Quibusdam fugiat illum rem
-            est reiciendis natus error possimus eveniet beatae voluptatibus.
+          <p className="px-3 py-5 pb-10 text-sm md:text-base ">
+            En este momento no tienes ningún artículo en favoritos, cuando
+            agregues o quieras recordar un artículo de tu interés, aparecerá
+            aquí.
           </p>
+
+          <Link
+            to={"/"}
+            className=" flex justify-center items-center gap-x-2 self-center md:self-end px-2 md:px-3 py-1.5 rounded-lg text-white bg-clr-two hover:bg-gradient-to-br group from-clr-one via-clr-two to-clr-three font-semibold w-fit"
+          >
+            Añadir a favoritos <FaPlus />
+          </Link>
         </div>
-
-        <div className="h-8" />
-
-        <Link
-          to={"/"}
-          className="ml-auto bg-violet-700 text-white px-2 py-1 rounded-md flex items-center gap-1 font-medium"
-        >
-          Añadir a favoritos <FaPlus />
-        </Link>
       </div>
     </section>
   );
