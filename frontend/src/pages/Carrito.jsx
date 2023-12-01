@@ -18,7 +18,12 @@ export default function Carrito() {
       carrito.productos
     );
 
-    window.location.href = response.data.init_point;
+    const newTab = window.open(response.data.init_point, "_blank");
+    if (newTab) {
+      newTab.focus();
+    } else {
+      console.error("Failed to open a new tab. Check your browser settings.");
+    }
   };
 
   useEffect(() => {
