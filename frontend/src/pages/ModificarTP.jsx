@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ModificarTP = () => {
   const [tipoProducto, setTipoProducto] = useState({
@@ -8,6 +8,7 @@ const ModificarTP = () => {
     descripcion: "",
   });
 
+  const navigate = useNavigate();
   const params = useParams();
 
   const handleModificarUsuario = async (event) => {
@@ -18,6 +19,7 @@ const ModificarTP = () => {
         `http://127.0.0.1:8000/api/tipo-productos/${params.id}/`,
         tipoProducto
       );
+      navigate("/registro6");
       console.log("Tipo de producto modificado:", response.data);
     } catch (error) {
       console.error(

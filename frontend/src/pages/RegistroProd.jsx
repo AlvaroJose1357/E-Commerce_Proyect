@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const RegistroProd = () => {
   const [producto, setProducto] = useState({
@@ -14,6 +15,7 @@ export const RegistroProd = () => {
     tipoProducto: "",
   });
   const [image, setImagen] = useState("");
+  const navigate = useNavigate();
 
   const handleInput = (event) => {
     setProducto({ ...producto, [event.target.name]: event.target.value });
@@ -49,7 +51,9 @@ export const RegistroProd = () => {
         "http://127.0.0.1:8000/api/productos/",
         producto
       );
-      console.log("Producto registrado:", response.data);
+      if (response.data) {
+        navigate("/registro7");
+      }
     } catch (error) {
       console.error("Error al registrar producto:", error.response.data);
     }

@@ -1,12 +1,14 @@
-import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegistroTP = () => {
   const [tipoProducto, setTipoProducto] = useState({
     tipoProducto: "",
     descripcion: "",
   });
+
+  const navigate = useNavigate();
 
   const handleInput = (event) => {
     setTipoProducto({
@@ -23,7 +25,10 @@ const RegistroTP = () => {
         "http://127.0.0.1:8000/api/tipo-productos/",
         tipoProducto
       );
-      console.log("Tipo de producto registrado:", response.data);
+      if (response.data) {
+        console.log("Tipo de producto registrado:", response.data);
+        navigate("/registros6");
+      }
     } catch (error) {
       console.error("Error al registrar el tipo:", error.response.data);
     }
