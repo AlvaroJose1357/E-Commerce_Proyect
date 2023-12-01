@@ -6,7 +6,6 @@ export const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("tokenUser");
 
   if (!token) {
-    toast.error("Debes iniciar sesión para acceder a esta página");
     return <Navigate to="/user  " replace />;
   }
 
