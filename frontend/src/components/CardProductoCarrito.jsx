@@ -5,7 +5,6 @@ import { borrarProductoCarrito } from "../api/carrito.api";
 export default function CardProductoCarrito({ idProducto, carritoID }) {
   const [producto, setProducto] = useState({});
   const [cantidad, setCantidad] = useState(1);
-  const [totalProductos, settotalProductos] = useState(0);
 
   useEffect(() => {
     async function cargarProducto() {
@@ -55,38 +54,11 @@ export default function CardProductoCarrito({ idProducto, carritoID }) {
           {`$${producto.oferta || producto.precio}`}
         </p>
         <div className="self-center flex justify-center items-center gap-x-2">
-          <Button
-            signo="-"
-            handleClick={() => {
-              if (cantidad > 1) {
-                setCantidad(cantidad - 1);
-              }
-            }}
-          />
           <p>{cantidad}</p>
-          <Button
-            signo="+"
-            handleClick={() => {
-              if (cantidad < producto.cantidad) {
-                setCantidad(cantidad + 1);
-              }
-            }}
-          />
         </div>
       </div>
     </>
   ) : (
     <h2>Cargando...</h2>
-  );
-}
-
-function Button({ signo, handleClick }) {
-  return (
-    <button
-      className="bg-clr-two text-white px-3 rounded-lg "
-      onClick={handleClick}
-    >
-      {signo}
-    </button>
   );
 }

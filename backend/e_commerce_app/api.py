@@ -263,33 +263,15 @@ class PaymentView(APIView):
         sdk = mercadopago.SDK(
             "TEST-416579947128865-112820-0118d8a35783cd83ababcb2e9ee7838c-1570676804"
         )
-        # informacion sobre los productos
+        
+        
         preference_data = {
-            "items": [
-                {
-                    "title": "Portátil HP 15-dw3505la",
-                    "unit_price": 500000,
-                    "currency_id": "COP",
-                    "quantity": 1,
-                },
-                {
-                    "title": "Portátil HP 15-dw3505la",
-                    "unit_price": 500000,
-                    "currency_id": "COP",
-                    "quantity": 1,
-                },
-                {
-                    "title": "Portátil HP 15-dw3505la",
-                    "unit_price": 500000,
-                    "currency_id": "COP",
-                    "quantity": 1,
-                },
-            ]
+            "items": request.data
         }
+        
         # se almacena la respuesta, se imprime y se devuelve al cliente con una respuesta HTTP_200_OK
         preference_response = sdk.preference().create(preference_data)
         preference = preference_response["response"]
-        print(preference)
         return Response(
             preference, status=status.HTTP_200_OK
         )  # HTTP_200_OK signifca que esta bieeen

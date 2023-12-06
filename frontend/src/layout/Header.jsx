@@ -97,7 +97,6 @@ export default function Header() {
               </Link>
             </div>
           </div>
-          <div></div>
         </button>
         <p className="border-l-2 border-black"></p>
         <Link to="favoritos" className="flex items-center justify-center">
