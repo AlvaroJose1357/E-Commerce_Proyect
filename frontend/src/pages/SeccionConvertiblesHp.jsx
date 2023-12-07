@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Asus from "../img/asusImage.png";
-import AsusPortatilImage from "../img/asusPortatil.jpg";
+import AsusPortatilImage from "../img/AsusPortatil.jpg";
 import Slider from "../components/Slider";
 import { obtenerProductosMarcaTipo } from "../api/productos.api";
 
@@ -14,11 +14,7 @@ export default function SeccionConvertiblesHp() {
       //Como se divide por secciones, se debe dividir por partes los registros, en este caso se van a dividir por paginas de a 8 registros, y el siguiente arreglo nos servira para almacenar cada una de esas divisiones
       const productosPorPagina = [];
       // la siguiente constante es la encargadar de obtener la respuesta de la api, la palabra reservada await signifita que para definir esa consonante se debe esperar a que la funcion obtenerProduc.... responda
-      const response = await obtenerProductosMarcaTipo(
-        "HP",
-        "convertibles",
-        8
-      );
+      const response = await obtenerProductosMarcaTipo("HP", "convertibles", 8);
       //Se guardar los datos de la primer pagina que devuelve 8 registros
       const portatilesPaginaActual = response.data;
       //Se agrega al arreglo que contendra las divisiones
