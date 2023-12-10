@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Monitor from "../img/LogoMonitorMsi.png";
-import MonitorLogoImg from "../img/componentes.jpg";
+import MonitorLogoImg from "../img/Componentes.jpg";
 import Slider from "../components/Slider";
 import { obtenerProductosTipo } from "../api/productos.api";
 

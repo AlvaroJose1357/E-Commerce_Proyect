@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Asus from "../img/asusImage.png";
-import AsusPortatilImage from "../img/asusPortatil.jpg";
+import AsusPortatilImage from "../img/AsusPortatil.jpg";
 import Slider from "../components/Slider";
 import { obtenerProductosMarcaTipo } from "../api/productos.api";
 
